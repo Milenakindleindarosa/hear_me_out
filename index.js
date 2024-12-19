@@ -23,32 +23,58 @@ function cadJogador() {
             }
         );
 
-        if (players.length >= 2) {
+        if (players.length >= 3) {
             adicionarJogador = prompt(`Deseja adicionar mais jogadores? S-Sim | N-Não`).toUpperCase();
         }
-    } while (adicionarJogador == "S" && players.length < 2);
+    } while (adicionarJogador == "S" || players.length < 3);
     console.log(players);
     imprimePersonagens();
     // // document.write(`<div class="player"><li>${players.join("</li><li>")}</li></div>`);
 }
 
-function imprimePersonagens() {
+function imprimePersonagens()
+{
+    listaPersonagens.sort();
+    document.write(`<p>`);
+    for (let item of listaPersonagens) 
+    {
+        document.write(`${item} <br>`);
+    }
+    document.write(`</p>`);
+    imprimeJogo();
+}
+
+function imprimeJogo() 
+{
     for (let quant = 0; quant < players.length; quant++) {
-        document.write(`<li><span>+</span> ${players[quant].nome}<ul>`);
+        document.write(`<ul>`)
+        document.write(`<li><span> + </span> ${players[quant].nome}<ul>`);
             for (let subquant = 0; subquant < players[quant].personagem.length; subquant++) {
                 document.write(`<li>${players[quant].personagem[subquant]}</li>`)
             }
-        document.write(`</ul></li>`)
+        document.write(`</ul></li></ul>`);
 
-        let elements = document.querySelectorAll('span');
+        const nodeList = document.querySelectorAll("li > ul");
+            for (let i = 0; i < nodeList.length; i++) 
+                {
+                nodeList[i].style.display = "none";
+            }
+    }
 
-        elements.forEach((item) => 
+    modificaJogo();
+}
+
+function modificaJogo()
+{
+    let elements = document.querySelectorAll('span');
+
+    elements.forEach((item) => 
         {
             item.addEventListener('click', function(e)
             {
                 console.log("Foi");
-                this.parentNode.querySelector('ul').style.display="none";
-
+                this.parentNode.querySelector('ul').style.display;
+    
                 let estado = this.parentNode.querySelector('ul').style.display;
     
                 if (estado == "block") 
@@ -63,8 +89,6 @@ function imprimePersonagens() {
                 }
             })
         });
-    
-    }
 }
 
 // let quantidadeNomes = Number(prompt(`Quantos nomes serão digitados por cada jogador?`));
